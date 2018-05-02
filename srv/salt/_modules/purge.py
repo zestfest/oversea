@@ -82,7 +82,10 @@ def default():
         sls_file.write(yaml.dump(preserve, Dumper=friendly_dumper,
                        default_flow_style=False))
 
-    uid = pwd.getpwnam("salt").pw_uid
-    gid = grp.getgrnam("salt").gr_gid
-    for path in [stack_default, "{}/{}".format(stack_default, 'ceph'), pathname]:
-        os.chown(path, uid, gid)
+    try:
+        uid = pwd.getpwnam("salt").pw_uid
+        gid = grp.getgrnam("salt").gr_gid
+        for path in [stack_default, "{}/{}".format(stack_default, 'ceph'), pathname]:
+            os.chown(path, uid, gid)
+    except KeyError:
+        pass

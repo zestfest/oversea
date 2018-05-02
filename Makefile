@@ -72,10 +72,10 @@ copy-files:
 	# tests
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/keyrings
 	install -m 644 srv/salt/ceph/tests/keyrings/*.sls $(DESTDIR)/srv/salt/ceph/tests/keyrings
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/openstack
-	install -m 644 srv/salt/ceph/tests/openstack/*.sls $(DESTDIR)/srv/salt/ceph/tests/openstack
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/os_switch
 	install -m 644 srv/salt/ceph/tests/os_switch/*.sls $(DESTDIR)/srv/salt/ceph/tests/os_switch
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/migrate
+	install -m 644 srv/salt/ceph/tests/migrate/*.sls $(DESTDIR)/srv/salt/ceph/tests/migrate
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/quiescent
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/quiescent/timeout
 	install -m 644 srv/salt/ceph/tests/quiescent/*.sls $(DESTDIR)/srv/salt/ceph/tests/quiescent
@@ -97,8 +97,6 @@ copy-files:
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/change
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/forced
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/nochange
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/tuned
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/tuned/off
 	install -m 644 srv/salt/ceph/tests/restart/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart
 	install -m 644 srv/salt/ceph/tests/restart/mon/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart/mon
 	install -m 644 srv/salt/ceph/tests/restart/mon/change/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart/mon/change
@@ -116,8 +114,10 @@ copy-files:
 	install -m 644 srv/salt/ceph/tests/restart/rgw/change/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/change
 	install -m 644 srv/salt/ceph/tests/restart/rgw/forced/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/forced
 	install -m 644 srv/salt/ceph/tests/restart/rgw/nochange/*.sls $(DESTDIR)/srv/salt/ceph/tests/restart/rgw/nochange
-	install -m 644 srv/salt/ceph/tests/tuned/*.sls $(DESTDIR)/srv/salt/ceph/tests/tuned
-	install -m 644 srv/salt/ceph/tests/tuned/off/*.sls $(DESTDIR)/srv/salt/ceph/tests/tuned/off
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/remove
+	install -m 644 srv/salt/ceph/tests/remove/*.sls $(DESTDIR)/srv/salt/ceph/tests/remove
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/replace
+	install -m 644 srv/salt/ceph/tests/replace/*.sls $(DESTDIR)/srv/salt/ceph/tests/replace
 	# smoketests
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests
 	install -m 644 srv/salt/ceph/smoketests/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/
@@ -128,15 +128,26 @@ copy-files:
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/macros
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/macros/os_switch
 	install -m 644 srv/salt/ceph/smoketests/macros/os_switch/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/macros/os_switch
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/openstack
-	install -m 644 srv/salt/ceph/smoketests/openstack/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/openstack
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate
+	install -m 644 srv/salt/ceph/smoketests/migrate/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore
+	install -m 644 srv/salt/ceph/smoketests/migrate/bluestore/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore2
+	install -m 644 srv/salt/ceph/smoketests/migrate/bluestore2/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore2
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore3
+	install -m 644 srv/salt/ceph/smoketests/migrate/bluestore3/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate/bluestore3
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate/filestore
+	install -m 644 srv/salt/ceph/smoketests/migrate/filestore/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate/filestore
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/migrate/filestore2
+	install -m 644 srv/salt/ceph/smoketests/migrate/filestore2/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/migrate/filestore2
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/quiescent
 	install -m 644 srv/salt/ceph/smoketests/quiescent/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/quiescent
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/restart
 	install -m 644 srv/salt/ceph/smoketests/restart/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/restart
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/tuned/off
-	install -m 644 srv/salt/ceph/smoketests/tuned/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/tuned
-	install -m 644 srv/salt/ceph/smoketests/tuned/off/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/tuned/off
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/remove
+	install -m 644 srv/salt/ceph/smoketests/remove/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/remove
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/replace
+	install -m 644 srv/salt/ceph/smoketests/replace/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/replace
 	# docs
 	install -d -m 755 $(DESTDIR)$(DOCDIR)/oversea
 	install -m 644 LICENSE $(DESTDIR)$(DOCDIR)/oversea/
@@ -186,6 +197,9 @@ copy-files:
 	# modules
 	install -d -m 755 $(DESTDIR)/srv/salt/_modules
 	install -m 644 srv/salt/_modules/*.py* $(DESTDIR)/srv/salt/_modules/
+	# states
+	install -d -m 755 $(DESTDIR)/srv/salt/_states
+	install -m 644 srv/salt/_states/*.py* $(DESTDIR)/srv/salt/_states/
 	# state files
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/admin
 	install -m 644 srv/salt/ceph/admin/*.sls $(DESTDIR)/srv/salt/ceph/admin/
@@ -429,16 +443,6 @@ copy-files:
 	install -m 644 srv/salt/ceph/openstack/cinder/key/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder/key
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder/pool
 	install -m 644 srv/salt/ceph/openstack/cinder/pool/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder/pool
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup
-	install -m 644 srv/salt/ceph/openstack/cinder-backup/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/auth
-	install -m 644 srv/salt/ceph/openstack/cinder-backup/auth/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/auth
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/files
-	install -m 644 srv/salt/ceph/openstack/cinder-backup/files/*.j2 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/files
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/key
-	install -m 644 srv/salt/ceph/openstack/cinder-backup/key/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/key
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/pool
-	install -m 644 srv/salt/ceph/openstack/cinder-backup/pool/*.sls $(DESTDIR)/srv/salt/ceph/openstack/cinder-backup/pool
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/glance
 	install -m 644 srv/salt/ceph/openstack/glance/*.sls $(DESTDIR)/srv/salt/ceph/openstack/glance
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/glance/auth
@@ -451,6 +455,12 @@ copy-files:
 	install -m 644 srv/salt/ceph/openstack/glance/pool/*.sls $(DESTDIR)/srv/salt/ceph/openstack/glance/pool
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/nova
 	install -m 644 srv/salt/ceph/openstack/nova/*.sls $(DESTDIR)/srv/salt/ceph/openstack/nova
+#	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/nova/auth
+#	install -m 644 srv/salt/ceph/openstack/nova/auth/*.sls $(DESTDIR)/srv/salt/ceph/openstack/nova/auth
+#	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/nova/files
+#	install -m 644 srv/salt/ceph/openstack/nova/files/*.j2 $(DESTDIR)/srv/salt/ceph/openstack/nova/files
+#	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/nova/key
+#	install -m 644 srv/salt/ceph/openstack/nova/key/*.sls $(DESTDIR)/srv/salt/ceph/openstack/nova/key
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/openstack/nova/pool
 	install -m 644 srv/salt/ceph/openstack/nova/pool/*.sls $(DESTDIR)/srv/salt/ceph/openstack/nova/pool
 	# state files - osd
@@ -524,8 +534,8 @@ copy-files:
 	install -m 644 srv/salt/ceph/remove/igw/auth/*.sls $(DESTDIR)/srv/salt/ceph/remove/igw/auth/
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/remove/mds
 	install -m 644 srv/salt/ceph/remove/mds/*.sls $(DESTDIR)/srv/salt/ceph/remove/mds/
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/remove/migrated
-	install -m 644 srv/salt/ceph/remove/migrated/*.sls $(DESTDIR)/srv/salt/ceph/remove/migrated/
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/remove/destroyed
+	install -m 644 srv/salt/ceph/remove/destroyed/*.sls $(DESTDIR)/srv/salt/ceph/remove/destroyed/
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/remove/mgr
 	install -m 644 srv/salt/ceph/remove/mgr/*.sls $(DESTDIR)/srv/salt/ceph/remove/mgr/
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/remove/mon
@@ -607,8 +617,6 @@ copy-files:
 	install -m 644 srv/salt/ceph/rescind/time/chrony/*.sls $(DESTDIR)/srv/salt/ceph/rescind/time/chrony
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/rescind/time/ntp
 	install -m 644 srv/salt/ceph/rescind/time/ntp/*.sls $(DESTDIR)/srv/salt/ceph/rescind/time/ntp
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/rescind/tuned
-	install -m 644 srv/salt/ceph/rescind/tuned/*.sls $(DESTDIR)/srv/salt/ceph/rescind/tuned/
 	# state files - repo
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/repo
 	install -m 644 srv/salt/ceph/repo/*.sls $(DESTDIR)/srv/salt/ceph/repo/
@@ -688,22 +696,6 @@ copy-files:
 	install -m 644 srv/salt/ceph/sysctl/*.sls $(DESTDIR)/srv/salt/ceph/sysctl
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/sysctl/files
 	install -m 644 srv/salt/ceph/sysctl/files/*.conf $(DESTDIR)/srv/salt/ceph/sysctl/files
-	# state files - tuned
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/osd
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/mon
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/mgr
-	install -m 644 srv/salt/ceph/tuned/osd/*.sls $(DESTDIR)/srv/salt/ceph/tuned/osd
-	install -m 644 srv/salt/ceph/tuned/mon/*.sls $(DESTDIR)/srv/salt/ceph/tuned/mon
-	install -m 644 srv/salt/ceph/tuned/mgr/*.sls $(DESTDIR)/srv/salt/ceph/tuned/mgr
-	# conf files - tuned
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/files
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-osd
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-mon
-	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-mgr
-	install -m 644 srv/salt/ceph/tuned/files/ceph-osd/*.conf $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-osd
-	install -m 644 srv/salt/ceph/tuned/files/ceph-mon/*.conf $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-mon
-	install -m 644 srv/salt/ceph/tuned/files/ceph-mgr/*.conf $(DESTDIR)/srv/salt/ceph/tuned/files/ceph-mgr
 	# state files - update
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/upgrade
 	install -m 644 srv/salt/ceph/upgrade/*.sls $(DESTDIR)/srv/salt/ceph/upgrade
@@ -856,7 +848,6 @@ copy-files:
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/mgr/cache
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/mon/cache
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/openattic/cache
-	install -d -m 700 $(DESTDIR)/srv/salt/ceph/openstack/cache
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/osd/cache
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/rgw/cache
 	install -d -m 700 $(DESTDIR)/srv/salt/ceph/configuration/files/ceph.conf.checksum
@@ -872,7 +863,6 @@ copy-files:
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/mgr/cache || true
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/mon/cache || true
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/openattic/cache || true
-	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/openstack/cache || true
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/osd/cache || true
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/rgw/cache || true
 	-chown $(USER):$(GROUP) $(DESTDIR)/srv/salt/ceph/configuration/files/ceph.conf.checksum || true

@@ -92,7 +92,8 @@ disable =
   C0330,
   I0011,
   I0012,
-  I1101
+  I1101,
+  file-perms
 
 # Disabled Checks
 # Errors

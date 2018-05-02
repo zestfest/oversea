@@ -57,11 +57,11 @@ remove openattic:
     - tgt_type: compound
     - sls: ceph.remove.openattic
 
-remove tuned:
-  salt.state:
-    - tgt: 'I@cluster:ceph'
-    - tgt_type: compound
-    - sls: ceph.rescind.tuned
+#remove tuned:
+#  salt.state:
+#    - tgt: 'I@cluster:ceph'
+#    - tgt_type: compound
+#    - sls: ceph.rescind.tuned
 
 {% if (salt.saltutil.runner('select.minions', cluster='ceph', roles='rgw') == []) and
       (salt.saltutil.runner('select.minions', cluster='ceph', roles='rgw_configurations') == []) %}
