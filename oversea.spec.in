@@ -758,12 +758,14 @@ the README for more information.
 %dir /srv/salt/ceph/smoketests/keyrings
 %dir /srv/salt/ceph/smoketests/macros
 %dir /srv/salt/ceph/smoketests/macros/os_switch
+%dir /srv/salt/ceph/smoketests/openstack
 %dir /srv/salt/ceph/smoketests/quiescent
 %dir /srv/salt/ceph/smoketests/restart
 %dir /srv/salt/ceph/smoketests/tuned
 %dir /srv/salt/ceph/smoketests/tuned/off
 %dir /srv/salt/ceph/tests
 %dir /srv/salt/ceph/tests/keyrings
+%dir /srv/salt/ceph/tests/openstack
 %dir /srv/salt/ceph/tests/os_switch
 %dir /srv/salt/ceph/tests/quiescent
 %dir /srv/salt/ceph/tests/quiescent/timeout
@@ -792,11 +794,13 @@ the README for more information.
 %dir /srv/salt/ceph/tests/tuned/off
 /srv/salt/ceph/smoketests/keyrings/*.sls
 /srv/salt/ceph/smoketests/macros/os_switch/*.sls
+/srv/salt/ceph/smoketests/openstack/*.sls
 /srv/salt/ceph/smoketests/quiescent/*.sls
 /srv/salt/ceph/smoketests/restart/*.sls
 /srv/salt/ceph/smoketests/tuned/*.sls
 /srv/salt/ceph/smoketests/tuned/off/*.sls
 /srv/salt/ceph/tests/keyrings/*.sls
+/srv/salt/ceph/tests/openstack/*.sls
 /srv/salt/ceph/tests/os_switch/*.sls
 /srv/salt/ceph/tests/quiescent/*.sls
 /srv/salt/ceph/tests/quiescent/timeout/*.sls
