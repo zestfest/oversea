@@ -113,7 +113,7 @@ kill `pgrep salt-run`
 echo "Testing minion response..."
 salt \* test.ping
 
-cd /deepsea/cli
+cd /oversea/cli
 
 pytest --cov=. -v tests
 coverage html

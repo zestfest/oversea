@@ -1,19 +1,19 @@
-.TH deepsea-stage-run 1 "DeepSea CLI man page"
+.TH oversea-stage-run 1 "OverSea CLI man page"
 .SH NAME
-deepsea-stage-run - Run DeepSea stages with real-time, user-friendly output.
+oversea-stage-run - Run OverSea stages with real-time, user-friendly output.
 
 .SH SYNOPSIS
-deepsea stage run [--help] [--hide-dynamic-steps] [--hide-state-steps]
+oversea stage run [--help] [--hide-dynamic-steps] [--hide-state-steps]
                   [--simple-output]
                   <stage_name>
 
 .SH DESCRIPTION
-Runs a DeepSea stage, showing its execution progress in real-time.
+Runs a OverSea stage, showing its execution progress in real-time.
 
-This commands is an alternative to the Salt-based commands for running DeepSea
-stages (or any DeepSea orchestration state file). For instance:
+This commands is an alternative to the Salt-based commands for running OverSea
+stages (or any OverSea orchestration state file). For instance:
 .RS
-.B deepsea stage run ceph.stage.0
+.B oversea stage run ceph.stage.0
 .RE
 is equivalent to:
 .RE
@@ -57,13 +57,13 @@ Useful when redirecting the monitor output to a text file.
 Run stage
 .B 0
 .RS
-.B deepsea stage run ceph.stage.0
+.B oversea stage run ceph.stage.0
 
 .RE
 Run stage
 .B radosgw
 .RS
-.B deepsea stage run ceph.stage.radosgw
+.B oversea stage run ceph.stage.radosgw
 
 .SH SEE ALSO
-.BR deepsea.commands(1)
+.BR oversea.commands(1)

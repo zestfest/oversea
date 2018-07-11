@@ -7,7 +7,7 @@ from __future__ import print_function
 
 
 # pylint: disable=C0413
-from .deepsea import main
+from .oversea import main
 
 
 if __name__ == "__main__":

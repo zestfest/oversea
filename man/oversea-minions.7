@@ -1,40 +1,40 @@
-.TH deepsea 7
+.TH oversea 7
 .SH NAME
-deepsea minions
+oversea minions
 .SH DESCRIPTION
 For compatibility with other Salt solutions,
-.B DeepSea
+.B OverSea
 uses
-.I deepsea_minions,
+.I oversea_minions,
 which constrains the targeting of Salt minions.
-By default DeepSea targets by grain using 'G@deepsea'. For more information on salt targeting, check the
+By default OverSea targets by grain using 'G@oversea'. For more information on salt targeting, check the
 .B SEE ALSO
 section.
 .SH METHODS
 Either reconfigure
-.I deepsea_minions
+.I oversea_minions
 to use any valid Salt target or apply grains to the desired minions.  For example,
 .PP
 .RS 4
-deepsea_minions: '*'
+oversea_minions: '*'
 .RE
 .PP
 will target all Salt minions.  Likewise,
 .PP
 .RS 4
-deepsea_minions: 'ses*'
+oversea_minions: 'ses*'
 .RE
 .PP
 will only target minions that begin with
 .B ses.
 .PP
-Alternatively, apply a grain to each minion and use the default deepsea_minions of
-.B G@deepsea:*.
+Alternatively, apply a grain to each minion and use the default oversea_minions of
+.B G@oversea:*.
 For example,
 .PP
 .RS 4
-salt -L node1.domain,node2.domain grains.append deepsea default
-salt -S 10.0.0.0/24 grains.append deepsea default
+salt -L node1.domain,node2.domain grains.append oversea default
+salt -S 10.0.0.0/24 grains.append oversea default
 .RE
 .PP
 will target the minions node1.domain and node2.domain in addition to all minions in the subnet 10.0.0.0/24.  Grain selection works well in environments where Salt is installed on minions that follow no simple pattern.
@@ -42,15 +42,15 @@ will target the minions node1.domain and node2.domain in addition to all minions
 To remove a grain completely from a minion, run
 .PP
 .RS 4
-salt 'xyz.domain' grains.delval deepsea destructive=True
+salt 'xyz.domain' grains.delval oversea destructive=True
 .RE
 .PP
 For more information on Salt grains see https://docs.saltstack.com/en/latest/topics/grains/
 
 .SH FILES
 The file for
-.I deepsea_minions
-is /srv/pillar/ceph/deepsea_minions.sls.
+.I oversea_minions
+is /srv/pillar/ceph/oversea_minions.sls.
 .SH SEE ALSO
 .UR https://docs.saltstack.com/en/latest/topics/targeting/
 .UE

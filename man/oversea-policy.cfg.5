@@ -1,6 +1,6 @@
-.TH deepsea-policy.cfg 5
+.TH oversea-policy.cfg 5
 .SH NAME
-deepsea policy.cfg \- configuration file for assignments
+oversea policy.cfg \- configuration file for assignments
 .SH DESCRIPTION
 The
 .B policy.cfg
@@ -36,7 +36,7 @@ cluster-ceph/cluster/*.sls
 .RE
 .PP
 The *.sls will match all minions constrained by
-.B deepsea-minions (7)
+.B oversea-minions (7)
 but each minion could be explicitly listed.
 .SS Role Assignment
 In a Ceph cluster, a minion can perform one or more roles.  The roles are master, admin, mon, storage, mgr, mds, igw, rgw, ganesha and openattic.  All must be defined explicitly except storage.  Storage is addressed in the Profile section.
@@ -207,5 +207,5 @@ Globbing and multiple entires is encouraged and typically easier to maintain.  T
 .SH AUTHOR
 Eric Jackson <ejackson@suse.com>
 .SH SEE ALSO
-/usr/share/doc/packages/deepsea/examples,
-.BR deepsea-stages (7)
+/usr/share/doc/packages/oversea/examples,
+.BR oversea-stages (7)

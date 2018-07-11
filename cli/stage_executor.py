@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-DeepSea Stage executor module
-This module is responsible for starting the execution of a DeepSea stage
+OverSea Stage executor module
+This module is responsible for starting the execution of a OverSea stage
 
 The user can run a stage like this:
-    $ deepsea stage run ceph.stage.0
+    $ oversea stage run ceph.stage.0
 
 which is equivalent to:
     $ salt-run state.orch ceph.stage.0

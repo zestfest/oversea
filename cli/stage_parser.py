@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-This module is responsible for the parsing of DeepSea stage files
+This module is responsible for the parsing of OverSea stage files
 """
 from __future__ import absolute_import
 from __future__ import print_function
@@ -149,21 +149,21 @@ class SLSRenderer(object):
             if isinstance(state_name, str):
                 state_name = [state_name]
 
-            res = SaltClient.local().cmd(target, 'deepsea.show_low_sls',
+            res = SaltClient.local().cmd(target, 'oversea.show_low_sls',
                                          state_name, tgt_type="compound")
 
             logger.debug("Rendering result: %s", res)
             for minion, states in res.items():
                 if isinstance(states, str):
-                    logger.info("call to deepsea module returned: %s", states)
+                    logger.info("call to oversea module returned: %s", states)
                     if states.endswith("is not available."):
                         if not retry:
                             res = StateRenderingException(
                                 minion, None,
-                                ['deepsea module not available'])
+                                ['oversea module not available'])
                             break
 
-                        logger.info("deepsea module not available: syncing "
+                        logger.info("oversea module not available: syncing "
                                     "modules")
                         SaltClient.local().cmd(target, 'saltutil.sync_modules',
                                                [], tgt_type="compound")

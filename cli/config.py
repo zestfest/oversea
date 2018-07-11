@@ -11,7 +11,7 @@ class Config(object):
     """
 
     # the log file path location
-    LOG_FILE_PATH = "/var/log/deepsea.log"
+    LOG_FILE_PATH = "/var/log/oversea.log"
 
     # the log verbosity level
     LOG_LEVEL = "info"

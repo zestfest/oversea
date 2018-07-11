@@ -42,13 +42,13 @@ def test(**kwargs):
 
             """)
 
-        # copy deepsea salt module
-        if not os.path.exists("/srv/salt/_modules/deepsea.py"):
+        # copy oversea salt module
+        if not os.path.exists("/srv/salt/_modules/oversea.py"):
             if not os.path.exists("/srv/salt/_modules"):
                 os.makedirs("/srv/salt/_modules")
         testsdir = os.path.dirname(__file__)
-        mod_path = "{}/../../srv/salt/_modules/deepsea.py".format(testsdir)
-        shutil.copyfile(mod_path, "/srv/salt/_modules/deepsea.py")
+        mod_path = "{}/../../srv/salt/_modules/oversea.py".format(testsdir)
+        shutil.copyfile(mod_path, "/srv/salt/_modules/oversea.py")
 
         # sync modules
         SaltClient.local().cmd('*', 'saltutil.sync_modules')
