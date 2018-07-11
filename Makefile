@@ -45,7 +45,7 @@ endif
 
 usage:
 	@echo "Usage:"
-	@echo -e "\tmake install\tInstall DeepSea on this host"
+	@echo -e "\tmake install\tInstall OverSea on this host"
 	@echo -e "\tmake rpm\tBuild an RPM for installation elsewhere"
 	@echo -e "\tmake test\tRun unittests"
 
@@ -69,14 +69,6 @@ copy-files:
 	install -m 600 etc/salt/master.d/eauth.conf $(DESTDIR)/etc/salt/master.d/
 	install -m 644 etc/salt/master.d/salt-api.conf $(DESTDIR)/etc/salt/master.d/
 	install -m 600 srv/salt/ceph/salt-api/files/sharedsecret.conf.j2 $(DESTDIR)/etc/salt/master.d/sharedsecret.conf
-	# qa
-	install -d -m 755 $(DESTDIR)/usr/lib/deepsea/qa/common
-	install -d -m 755 $(DESTDIR)/usr/lib/deepsea/qa/suites/basic
-	install -d -m 755 $(DESTDIR)/usr/lib/deepsea/qa/suites/ceph-test
-	install -m 644 qa/README $(DESTDIR)/usr/lib/deepsea/qa/
-	install -m 644 qa/common/*.sh $(DESTDIR)/usr/lib/deepsea/qa/common/
-	install -m 755 qa/suites/basic/*.sh $(DESTDIR)/usr/lib/deepsea/qa/suites/basic/
-	install -m 755 qa/suites/ceph-test/*.sh $(DESTDIR)/usr/lib/deepsea/qa/suites/ceph-test/
 	# tests
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/tests/keyrings
 	install -m 644 srv/salt/ceph/tests/keyrings/*.sls $(DESTDIR)/srv/salt/ceph/tests/keyrings
@@ -133,15 +125,15 @@ copy-files:
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/smoketests/restart
 	install -m 644 srv/salt/ceph/smoketests/restart/*.sls $(DESTDIR)/srv/salt/ceph/smoketests/restart
 	# docs
-	install -d -m 755 $(DESTDIR)$(DOCDIR)/deepsea
-	install -m 644 LICENSE $(DESTDIR)$(DOCDIR)/deepsea/
-	install -m 644 README.md $(DESTDIR)$(DOCDIR)/deepsea/
+	install -d -m 755 $(DESTDIR)$(DOCDIR)/oversea
+	install -m 644 LICENSE $(DESTDIR)$(DOCDIR)/oversea/
+	install -m 644 README.md $(DESTDIR)$(DOCDIR)/oversea/
 	# examples
-	install -d -m 755 $(DESTDIR)$(DOCDIR)/deepsea/examples
-	install -m 644 doc/examples/* $(DESTDIR)$(DOCDIR)/deepsea/examples/
+	install -d -m 755 $(DESTDIR)$(DOCDIR)/oversea/examples
+	install -m 644 doc/examples/* $(DESTDIR)$(DOCDIR)/oversea/examples/
 	# pillar
-	install -d -m 755 $(DESTDIR)$(DOCDIR)/deepsea/pillar
-	install -m 644 doc/pillar/* $(DESTDIR)$(DOCDIR)/deepsea/pillar/
+	install -d -m 755 $(DESTDIR)$(DOCDIR)/oversea/pillar
+	install -m 644 doc/pillar/* $(DESTDIR)$(DOCDIR)/oversea/pillar/
 	# stacky.py (included in salt 2016.3)
 	install -d -m 755 $(DESTDIR)/srv/modules/pillar
 	install -m 644 srv/modules/pillar/stack.py $(DESTDIR)/srv/modules/pillar/
@@ -151,7 +143,7 @@ copy-files:
 	# runners
 	install -d -m 755 $(DESTDIR)/srv/modules/runners
 	install -m 644 srv/modules/runners/*.py* $(DESTDIR)/srv/modules/runners/
-	sed -i "s/DEVVERSION/"$(VERSION)"/" $(DESTDIR)/srv/modules/runners/deepsea.py
+	sed -i "s/DEVVERSION/"$(VERSION)"/" $(DESTDIR)/srv/modules/runners/oversea.py
 	# utils
 	install -d -m 755 $(DESTDIR)/srv/modules/utils
 	install -m 644 srv/modules/utils/*.py* $(DESTDIR)/srv/modules/utils
@@ -167,17 +159,17 @@ copy-files:
 	install -d -m 755 $(DESTDIR)/srv/pillar/ceph/benchmarks/templates
 	install -m 644 srv/pillar/ceph/benchmarks/templates/*.j2 $(DESTDIR)/srv/pillar/ceph/benchmarks/templates/
 	install -m 644 srv/pillar/ceph/init.sls $(DESTDIR)/srv/pillar/ceph/
-	install -m 644 srv/pillar/ceph/deepsea_minions.sls $(DESTDIR)/srv/pillar/ceph/
+	install -m 644 srv/pillar/ceph/oversea_minions.sls $(DESTDIR)/srv/pillar/ceph/
 	install -d -m 755 $(DESTDIR)/srv/pillar/ceph/stack
 	install -m 644 srv/pillar/ceph/stack/stack.cfg $(DESTDIR)/srv/pillar/ceph/stack/stack.cfg
 	install -m 644 srv/pillar/top.sls $(DESTDIR)/srv/pillar/
 	# man pages
 	install -d -m 755 $(DESTDIR)/usr/share/man/man7
-	install -m 644 man/deepsea*.7 $(DESTDIR)/usr/share/man/man7
+	install -m 644 man/oversea*.7 $(DESTDIR)/usr/share/man/man7
 	install -d -m 755 $(DESTDIR)/usr/share/man/man5
-	install -m 644 man/deepsea*.5 $(DESTDIR)/usr/share/man/man5
+	install -m 644 man/oversea*.5 $(DESTDIR)/usr/share/man/man5
 	install -d -m 755 $(DESTDIR)/usr/share/man/man1
-	install -m 644 man/deepsea*.1 $(DESTDIR)/usr/share/man/man1
+	install -m 644 man/oversea*.1 $(DESTDIR)/usr/share/man/man1
 	# modules
 	install -d -m 755 $(DESTDIR)/srv/salt/_modules
 	install -m 644 srv/salt/_modules/*.py* $(DESTDIR)/srv/salt/_modules/
@@ -851,29 +843,29 @@ install-deps:
 install: pyc install-deps copy-files
 	sed -i '/^sharedsecret: /s!{{ shared_secret }}!'`cat /proc/sys/kernel/random/uuid`'!' $(DESTDIR)/etc/salt/master.d/sharedsecret.conf
 	chown $(USER):$(GROUP) $(DESTDIR)/etc/salt/master.d/*
-	echo "deepsea_minions: '*'" > /srv/pillar/ceph/deepsea_minions.sls
+	echo "oversea_minions: '*'" > /srv/pillar/ceph/oversea_minions.sls
 	chown -R $(USER) /srv/pillar/ceph
 	# Use '|| true' to suppress some error output in corner cases
 	systemctl restart salt-master
 	systemctl restart salt-api
-	# deepsea-cli
+	# oversea-cli
 	$(PYTHON) setup.py install --root=$(DESTDIR)/
 
 rpm: tarball test
-	sed '/^Version:/s/[^ ]*$$/'$(VERSION)'/' deepsea.spec.in > deepsea.spec
-	rpmbuild -bb deepsea.spec
+	sed '/^Version:/s/[^ ]*$$/'$(VERSION)'/' oversea.spec.in > oversea.spec
+	rpmbuild -bb oversea.spec
 
 # Removing test dependency until resolved
 tarball:
 	$(eval TEMPDIR := $(shell mktemp -d))
-	mkdir $(TEMPDIR)/deepsea-$(VERSION)
-	git archive HEAD | tar -x -C $(TEMPDIR)/deepsea-$(VERSION)
-	sed "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/deepsea-$(VERSION)/setup.py.in > $(TEMPDIR)/deepsea-$(VERSION)/setup.py
-	sed "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/deepsea-$(VERSION)/deepsea.spec.in > $(TEMPDIR)/deepsea-$(VERSION)/deepsea.spec
-	sed -i "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/deepsea-$(VERSION)/srv/modules/runners/deepsea.py
+	mkdir $(TEMPDIR)/oversea-$(VERSION)
+	git archive HEAD | tar -x -C $(TEMPDIR)/oversea-$(VERSION)
+	sed "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/oversea-$(VERSION)/setup.py.in > $(TEMPDIR)/oversea-$(VERSION)/setup.py
+	sed "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/oversea-$(VERSION)/oversea.spec.in > $(TEMPDIR)/oversea-$(VERSION)/oversea.spec
+	sed -i "s/DEVVERSION/"$(VERSION)"/" $(TEMPDIR)/oversea-$(VERSION)/srv/modules/runners/oversea.py
 	mkdir -p ~/rpmbuild/SOURCES
-	cp $(TEMPDIR)/deepsea-$(VERSION)/setup.py .
-	tar -cjf ~/rpmbuild/SOURCES/deepsea-$(VERSION).tar.bz2 -C $(TEMPDIR) .
+	cp $(TEMPDIR)/oversea-$(VERSION)/setup.py .
+	tar -cjf ~/rpmbuild/SOURCES/oversea-$(VERSION).tar.bz2 -C $(TEMPDIR) .
 	rm -r $(TEMPDIR)
 
 test: setup.py

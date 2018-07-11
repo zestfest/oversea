@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-instance-attributes
 """
-DeepSea stage's progress monitor
+OverSea stage's progress monitor
 """
 from __future__ import absolute_import
 from __future__ import print_function
@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 class Stage(object):
     """
-    Class that models the execution of a DeepSea stage
+    Class that models the execution of a OverSea stage
     """
 
     class Step(object):
@@ -465,9 +465,9 @@ class Monitor(threading.Thread):
             logger.debug("handle: %s", self.event)
             getattr(self.monitor, self.func)(self.event)
 
-    class DeepSeaEventListener(EventListener):
+    class OverSeaEventListener(EventListener):
         """
-        Salt event listener for DeepSea
+        Salt event listener for OverSea
         """
         def __init__(self, monitor):
             self.monitor = monitor
@@ -493,7 +493,7 @@ class Monitor(threading.Thread):
         def handle_new_job_event(self, event):
             if 'pillar' in event.fun or 'saltutil.find_job' in event.fun or 'grains' in event.fun:
                 return
-            if event.fun == 'deepsea.render_sls':
+            if event.fun == 'oversea.render_sls':
                 return
             logger.debug("buffer: %s", event)
             self.monitor.append_event(Monitor.Event(self.monitor, 'start_step', event))
@@ -501,7 +501,7 @@ class Monitor(threading.Thread):
         def handle_ret_job_event(self, event):
             if 'pillar' in event.fun or 'saltutil.find_job' in event.fun or 'grains' in event.fun:
                 return
-            if event.fun == 'deepsea.render_sls':
+            if event.fun == 'oversea.render_sls':
                 return
             logger.debug("buffer: %s", event)
             self.monitor.append_event(Monitor.Event(self.monitor, 'end_step', event))
@@ -513,7 +513,7 @@ class Monitor(threading.Thread):
     def __init__(self, show_state_steps, show_dynamic_steps):
         super(Monitor, self).__init__()
         self._processor = SaltEventProcessor()
-        self._processor.add_listener(Monitor.DeepSeaEventListener(self))
+        self._processor.add_listener(Monitor.OverSeaEventListener(self))
         self._show_state_steps = show_state_steps
         self._show_dynamic_steps = show_dynamic_steps
         self._running_stage = None
@@ -545,7 +545,7 @@ class Monitor(threading.Thread):
         """
         Start the monitoring thread
         """
-        logger.info("Starting the DeepSea event monitoring")
+        logger.info("Starting the OverSea event monitoring")
         self._processor.start()
         super(Monitor, self).start()
 
@@ -553,7 +553,7 @@ class Monitor(threading.Thread):
         """
         Stop the monitoring thread
         """
-        logger.info("Stopping the DeepSea event monitoring")
+        logger.info("Stopping the OverSea event monitoring")
         self._running = False
         self._processor.stop()
 
@@ -601,7 +601,7 @@ class Monitor(threading.Thread):
         """
         Sets the current running stage
         Args:
-            event (NewRunnerEvent): the DeepSea state.orch start event
+            event (NewRunnerEvent): the OverSea state.orch start event
         """
         stage_name = event.args[0]
         if stage_name in self._stage_steps:
@@ -626,7 +626,7 @@ class Monitor(threading.Thread):
         """
         Sets the current running stage as finished
         Args:
-            event (RetRunnerEvent): the DeepSea state.orch end event
+            event (RetRunnerEvent): the OverSea state.orch end event
         """
         if not self._running_stage:
             # not inside a running stage, igore step

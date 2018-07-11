@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-many-branches,too-many-statements
 """
-DeepSea CLI
+OverSea CLI
 """
 from __future__ import absolute_import
 from __future__ import print_function
@@ -62,7 +62,7 @@ def _setup_logging():
 
 def _run_monitor(show_state_steps, show_dynamic_steps, simple_output):
     """
-    Run the DeepSea stage monitor and progress visualizer
+    Run the OverSea stage monitor and progress visualizer
     """
     mon = Monitor(show_state_steps, show_dynamic_steps)
     listener = SimplePrinter() if simple_output else StepListPrinter()
@@ -88,10 +88,10 @@ def _run_monitor(show_state_steps, show_dynamic_steps, simple_output):
     if not simple_output:
         os.system('clear')
         PP.println("Use Ctrl+C to stop the monitor")
-        PP.p_bold("Initializing DeepSea progess monitor...")
+        PP.p_bold("Initializing OverSea progess monitor...")
     else:
         PP.println("Use Ctrl+C to stop the monitor")
-        PP.print("Initializing DeepSea progess monitor...")
+        PP.print("Initializing OverSea progess monitor...")
 
     mon.start()
     if not simple_output:
@@ -242,19 +242,19 @@ def _run_show_stage_steps(stage_name, hide_state_steps, only_visible_steps):
     PP.println()
 
 
-@click.group(name="deepsea")
+@click.group(name="oversea")
 @click.option('-l', '--log-level', default='info',
               type=click.Choice(["info", "error", "debug", "silent"]),
               help="set log level (default: info)")
-@click.option('--log-file', default='/var/log/deepsea.log',
+@click.option('--log-file', default='/var/log/oversea.log',
               type=click.Path(dir_okay=False),
-              help="the file path for the log to be stored (default: /var/log/deepsea.log)")
-@click.version_option(pkg_resources.get_distribution('deepsea'), message="%(version)s")
+              help="the file path for the log to be stored (default: /var/log/oversea.log)")
+@click.version_option(pkg_resources.get_distribution('oversea'), message="%(version)s")
 def cli(log_level, log_file):
     """
-    DeepSea CLI tool.
+    OverSea CLI tool.
 
-    Use this tool to visualize the execution progress of DeepSea, either by
+    Use this tool to visualize the execution progress of OverSea, either by
     running the stages directly through "stage run" command, or by monitoring
     the salt-run execution using the "monitor" command.
     """
@@ -269,9 +269,9 @@ def cli(log_level, log_file):
 @requires_root_privileges
 def monitor(show_state_steps, show_dynamic_steps, simple_output):
     """
-    Starts DeepSea progress monitor.
+    Starts OverSea progress monitor.
 
-    This allows to visualize DeepSea execution progress when running DS stages
+    This allows to visualize OverSea execution progress when running DS stages
     using salt-run commands in other terminal sessions.
     """
     _setup_logging()
@@ -286,8 +286,8 @@ def stage():
     pass
 
 
-@click.command(name='dry-run', short_help='show DeepSea stage steps')
-@click.argument('stage_name', 'the DeepSea stage name')
+@click.command(name='dry-run', short_help='show OverSea stage steps')
+@click.argument('stage_name', 'the OverSea stage name')
 @click.option('--hide-state-steps', is_flag=True,
               help="this will disable state files steps from being parsed")
 @click.option('--only-visible-steps', is_flag=True,
@@ -305,15 +305,15 @@ def stage_dryrun(stage_name, hide_state_steps, only_visible_steps, clear_cache):
     _run_show_stage_steps(stage_name, hide_state_steps, only_visible_steps)
 
 
-@click.command(name='run', short_help='runs DeepSea stage')
-@click.argument('stage_name', 'the DeepSea stage name')
+@click.command(name='run', short_help='runs OverSea stage')
+@click.argument('stage_name', 'the OverSea stage name')
 @click.option('--hide-state-steps', is_flag=True, help="shows state visible steps progress")
 @click.option('--hide-dynamic-steps', is_flag=True, help="shows runtime generated steps")
 @click.option('--simple-output', is_flag=True, help="minimalistic b&w output")
 @requires_root_privileges
 def stage_run(stage_name, hide_state_steps, hide_dynamic_steps, simple_output):
     """
-    Runs a DeepSea stage
+    Runs a OverSea stage
 
     This command is equivalent to run:
 
@@ -337,14 +337,14 @@ def salt_run():
 
 
 @click.command(name='state.orch')
-@click.argument('stage_name', 'the DeepSea stage name')
+@click.argument('stage_name', 'the OverSea stage name')
 @click.option('--hide-state-steps', is_flag=True, help="shows state visible steps progress")
 @click.option('--hide-dynamic-steps', is_flag=True, help="shows runtime generated steps")
 @click.option('--simple-output', is_flag=True, help="minimalistic b&w output")
 @requires_root_privileges
 def state_orch(stage_name, hide_state_steps, hide_dynamic_steps, simple_output):
     """
-    Runs a DeepSea stage
+    Runs a OverSea stage
 
     This command is equivalent to run:
 
@@ -368,4 +368,4 @@ def main():
     stage.add_command(stage_run)
     salt_run.add_command(state_orch)
     # pylint: disable=E1120,E1123
-    cli(prog_name='deepsea')
+    cli(prog_name='oversea')

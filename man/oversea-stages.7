@@ -1,8 +1,8 @@
-.TH deepsea 7
+.TH oversea 7
 .SH NAME
-deepsea stages \- orchestrations for a Ceph cluster life cycle
+oversea stages \- orchestrations for a Ceph cluster life cycle
 .SH DESCRIPTION
-.B DeepSea Stages
+.B OverSea Stages
 are named Salt orchestrations.  Six stages, 0 through 5, represent the life cycle of a Ceph cluster.  Each stage is also named which may be used interchangeably with the number.
 .RS 4
 .PP
@@ -74,13 +74,13 @@ Additionally one orchestration will run Stages 1-5.  Stage 0 is excluded since p
 # salt-run state.orch ceph.stage.all
 .PP
 All of these commands can also be prefixed with
-.B deepsea
+.B oversea
 to give feedback during the process from the Salt event bus.  Salt orchestrations are unnervingly silent during execution and only report when complete.  For example,
 .PP
-# deepsea salt-run state.orch ceph.stage.0
+# oversea salt-run state.orch ceph.stage.0
 .SH AUTHOR
 Eric Jackson <ejackson@suse.com>
 .SH SEE ALSO
-.BR deepsea (1),
-.BR deepsea (7),
-.BR deepsea-commands (7)
+.BR oversea (1),
+.BR oversea (7),
+.BR oversea-commands (7)

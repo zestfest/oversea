@@ -1,23 +1,23 @@
 # -*- coding: utf-8 -*-
 from setuptools import setup
 
-DEEPSEA_VERSION = 'DEVVERSION'
+OVERSEA_VERSION = 'DEVVERSION'
 
 
-def _get_deepsea_version():
-    return DEEPSEA_VERSION
+def _get_oversea_version():
+    return OVERSEA_VERSION
 
 
 setup(
-    name='deepsea',
-    version=_get_deepsea_version(),
+    name='oversea',
+    version=_get_oversea_version(),
     package_dir={
-        'deepsea': 'cli'
+        'oversea': 'cli'
     },
-    packages=['deepsea', 'deepsea.monitors'],
+    packages=['oversea', 'oversea.monitors'],
     entry_points={
         'console_scripts': [
-            'deepsea = deepsea.__main__:main'
+            'oversea = oversea.__main__:main'
         ]
     },
     tests_require=['pytest']

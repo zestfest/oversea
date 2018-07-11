@@ -1,14 +1,14 @@
-.TH deepsea-stage-dry-run 1 "DeepSea CLI man page"
+.TH oversea-stage-dry-run 1 "OverSea CLI man page"
 .SH NAME
-deepsea-stage-dry-run - Shows DeepSea stage execution steps
+oversea-stage-dry-run - Shows OverSea stage execution steps
 
 .SH SYNOPSIS
-deepsea stage dry-run [--help] [--hide-state-steps] [--only-visible-steps]
+oversea stage dry-run [--help] [--hide-state-steps] [--only-visible-steps]
                       [--clear-cache] [--no-cache]
                       <stage_name>
 
 .SH DESCRIPTION
-Parses a DeepSea stage and generates a detailed report showing all steps in order of execution.
+Parses a OverSea stage and generates a detailed report showing all steps in order of execution.
 
 This command can be used to understand what a stage will do, without actually
 running the stage. For instance, it shows the total number of steps; the type
@@ -56,10 +56,10 @@ Disables caching of stage parsing results.
 Show stage
 .B 0
 .RS
-.B deepsea stage dry-run ceph.stage.0
+.B oversea stage dry-run ceph.stage.0
 
 .RE
 Show stage
 .B radosgw
 .RS
-.B deepsea stage dry-run ceph.stage.radosgw
+.B oversea stage dry-run ceph.stage.radosgw

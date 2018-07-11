@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 def configuration():
     """
-    Purge all the necessary DeepSea related configurations
+    Purge all the necessary OverSea related configurations
 
     Note: leave proposals out for now, some may want to minimally roll back
     without rerunning Stage 1
