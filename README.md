@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/zestfest/oversea.svg?branch=master)](https://travis-ci.org/zestfest/oversea)
+
 # OverSea
 This is a fork of [DeepSea](https://github.com/SUSE/DeepSea).  The focus is to allow anyone to try Ceph reasonably quickly.  
 
