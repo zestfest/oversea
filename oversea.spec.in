@@ -31,7 +31,7 @@ Group:          System/Libraries
 Url:            https://github.com/zestfest/oversea
 Source0:        %{name}-%{version}.tar.bz2
 
-BuildRequires:  salt-master
+#BuildRequires:  salt-master
 Requires:       salt-master
 Requires:       salt-minion
 Requires:       salt-api
@@ -42,7 +42,7 @@ Requires:       python3-configobj
 Requires:       python3-six
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 BuildArch:      noarch
-Recommends:     oversea-cli
+#Recommends:     oversea-cli
 
 %description
 A collection of Salt files providing a deployment of Ceph as a series of stages.
@@ -694,7 +694,7 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %package cli
 Summary:        OverSea command line
 Group:          System/Console
-BuildRequires:  python3-setuptools
+#BuildRequires:  python3-setuptools
 Requires:       python3-setuptools
 Requires:       python3-click
 
@@ -703,17 +703,22 @@ The oversea-cli contains the oversea command.  This command reports the
 progress of orchestrations.  The default Salt behavior is silent until an
 orchestration completes.
 
+%{!?python3_version: %define python3_version %(python3 --version | awk -F'[ .]' '{printf("%s.%s", $2,$3)}')}
+
 %files cli
 %{_bindir}/oversea
-%{python3_sitelib}/oversea/
-%{python3_sitelib}/oversea-%{version}-py%{python3_version}.egg-info
-%{python3_sitelib}/oversea-%{version}-py%{python3_version}.egg-info/*
+#/%{python3_sitelib}/oversea/
+#/%{python3_sitelib}/oversea-%{version}-py%{python3_version}.egg-info
+#/%{python3_sitelib}/oversea-%{version}-py%{python3_version}.egg-info/*
+/usr/lib/python%{python3_version}/site-packages/oversea
+/usr/lib/python%{python3_version}/site-packages/oversea-%{version}-py%{python3_version}.egg-info
+/usr/lib/python%{python3_version}/site-packages/oversea-%{version}-py%{python3_version}.egg-info/*
 
 %package smoketests
 Summary:        OverSea integration test scripts
 Group:          System/Libraries
 Requires:       jq
-Recommends:     oversea
+#Recommends:     oversea
 
 %description smoketests
 The oversea-qa subpackage contains all the scripts used in OverSea
