@@ -851,7 +851,9 @@ install: pyc install-deps copy-files
 	# oversea-cli
 	$(PYTHON) setup.py install --root=$(DESTDIR)/
 
-rpm: tarball test
+all: test lint rpm
+
+rpm: tarball
 	sed '/^Version:/s/[^ ]*$$/'$(VERSION)'/' oversea.spec.in > oversea.spec
 	rpmbuild -bb oversea.spec
 
@@ -873,3 +875,4 @@ test: setup.py
 
 lint: setup.py
 	tox -e lint
+
