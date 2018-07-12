@@ -27,3 +27,6 @@ jobs:
         skip_cleanup: true
         on:
           repo: zestfest/oversea
+          branches:
+            only:
+              - master
