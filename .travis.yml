@@ -1,11 +1,7 @@
 language: python
-python:
-  - 2.7
 install:
     - make setup.py
     - pip install tox
-env:
-  - TOXENV=py27
 matrix:
   fast_finish: true
   include:
@@ -13,6 +9,23 @@ matrix:
       env: TOXENV=lint
     - python: 2.7
       env: TOXENV=py27
-script:
-  - tox -e $TOXENV
 cache: pip
+jobs:
+  include:
+    - script: make lint
+    - script: make test
+    - stage: deploy
+      python: 3.5
+      script:
+        - sudo apt-get install rpm
+        - make rpm
+      deploy:
+        provider: releases
+        api_key:
+          secure: oGL/EmecfGhsfoLv8TrdAem+HKhjpT7k1DUUE/WPtDCuX1KZBt61LT8uErVxMgxDzMvp5l9TKzggUIKrqajHbUA3FH4FH5tc3Mosp3Ak/jjIk5jMialFVHzDI5uQcenO7m7nDBESBBa7bwW8eIUxB1wxMRJV3yU5pGJVoF8G3CcQLIWYs1P5t/0FVF619C6Hy2TLTC5BmEZswYxetG8PbADqRoT3XNfSjKv7Q1uz3s4CAqCfymFFLPCCZBStJwukPXlx6LvUQiZ/K9lKUD+57K8kcWV8QP/LYODRInJe8MUVa+3TqEU9ji5tc40u2K6HCF2GmNvL+P9m8nSErX4Bati130I3g7ZjhxQ1Cx7BFYGtrqmgF7ZMZK3vyu44RIvfRxs2rKcPiLLPDw0vLzjfiWXpZKfESLN88OAkDQ/jiZrt1CzRtnAoVgxS4TSrtdPUQYHo7nBvCyx64hAqqzn+75Rcd0ow9C/lQRDXb1pvsHhl+pdK+8VvcNhMAa8O8DLal2GWDBn/7Ujn//mIx5ErQlaLa0br2ZRsMZDIqMKW/kFlcWC/L9gpFdfBCAOhw47Th9hIFF3jqzHtgUYaT88dQBSUGnUZiiUcWTyNhuXrAsCsu016R3SQ5tAhvIL6ZfBDy+gba96cIerXxB1LiHe8uW1eXqFA9/MWR0c/GtHQe9A=
+        file: oversea-*.rpm
+        file_glob: true
+        overwrite: true
+        skip_cleanup: true
+        on:
+          repo: zestfest/oversea
