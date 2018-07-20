@@ -1,19 +1,14 @@
 language: python
 install:
-    - make setup.py
-    - pip install tox
-matrix:
-  fast_finish: true
-  include:
-    - python: 3.5
-      env: TOXENV=lint
-    - python: 2.7
-      env: TOXENV=py27
+  - make setup.py
+  - pip install tox
 cache: pip
 jobs:
   include:
-    - script: make lint
     - script: make test
+    - stage: lint
+      python: 3.5
+      script: make lint
     - stage: deploy
       python: 3.5
       script:
@@ -30,3 +25,4 @@ jobs:
         skip_cleanup: true
         on:
           repo: zestfest/oversea
+          tags: true
