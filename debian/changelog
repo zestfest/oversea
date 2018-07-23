@@ -1,6 +1,6 @@
-deepsea (0.7.5-1) stable; urgency=low
+oversea (0.2.0-1) experimental; urgency=low
 
-  * Initial Debian packaging
+  * Converted from .rpm format to .deb by alien version 8.88
+  
 
- -- Tim Serong <tserong@suse.com>  Tue, 11 Apr 2017 12:07:37 +1100
-
+ -- Eric Jackson <eric@fury.home>  Mon, 23 Jul 2018 14:29:25 -0400

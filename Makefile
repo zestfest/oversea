@@ -857,6 +857,15 @@ rpm: tarball
 	sed '/^Version:/s/[^ ]*$$/'$(VERSION)'/' oversea.spec.in > oversea.spec
 	rpmbuild -bb oversea.spec
 
+deb: 
+	$(eval TEMPDIR := $(shell mktemp -d))
+	mkdir $(TEMPDIR)/oversea-$(VERSION)
+	make copy-files DESTDIR=$(TEMPDIR)/oversea-$(VERSION)
+	cp -rp debian $(TEMPDIR)/oversea-$(VERSION)
+	(cd $(TEMPDIR)/oversea-$(VERSION); dpkg-buildpackage -b -rfakeroot -us -uc)
+	mv $(TEMPDIR)/oversea*.deb .
+	rm -r $(TEMPDIR)
+
 # Removing test dependency until resolved
 tarball:
 	$(eval TEMPDIR := $(shell mktemp -d))

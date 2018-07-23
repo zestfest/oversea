@@ -1,20 +1,47 @@
 #!/usr/bin/make -f
-%:
-	dh $@
+# debian/rules for alien
 
-override_dh_auto_build:
-	# deepsea has no build step
-	true
+PACKAGE=$(shell dh_listpackages)
 
-override_dh_auto_test:
-	# `make test` needs tox, which somehow tries to install mock, pytest,
-	# salt, ipaddress, salttesting and pyfakefs during build, which is not
-	# going to work.  Not sure if these can be added as proper build deps
-	# to solve the problem, so in the meantime let's just skip the whole
-	# thing...
-	true
+build:
+	dh_testdir
 
-override_dh_auto_install:
-	# want make install to only copy files, not do the extra `sed` and
-	# `systemctl restart` deepsea's install target does
-	$(MAKE) DESTDIR=$$(pwd)/debian/deepsea copy-files
+clean:
+	dh_testdir
+	dh_testroot
+	dh_clean -d
+
+binary-indep: build
+
+binary-arch: build
+	dh_testdir
+	dh_testroot
+	dh_prep
+	dh_installdirs
+
+	dh_installdocs
+	dh_installchangelogs
+
+# Copy the packages's files.
+	find . -maxdepth 1 -mindepth 1 -not -name debian -print0 | \
+		xargs -0 -r -i cp -a {} debian/$(PACKAGE)
+
+#
+# If you need to move files around in debian/$(PACKAGE) or do some
+# binary patching, do it here
+#
+
+
+# This has been known to break on some wacky binaries.
+#	dh_strip
+	dh_compress
+#	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	-dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary
