@@ -1,12 +1,10 @@
-Source: deepsea
+Source: oversea
 Section: admin
-Priority: optional
-Maintainer: Tim Serong <tserong@suse.com>
-Build-Depends: debhelper (>= 9), salt-master
+Priority: extra
+Maintainer: Eric Jackson <swiftgist@gmail.com>
 
-Package: deepsea
+Package: oversea
 Architecture: all
-Depends: ${shlibs:Depends}, salt-master, salt-minion, python-ipaddress, python-netaddr
+Depends: salt-master
 Description: Salt solution for deploying and managing Ceph
- A collection of Salt files providing a deployment of Ceph as
- a series of stages.
+ A collection of Salt files providing a deployment of Ceph as a series of stages.

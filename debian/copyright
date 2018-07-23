@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: OverSea
+Source: https://github.com/zestfest/oversea
+
+Files: *
+Copyright: 2018 Eric Jackson <swiftgist@gmail.com>
+License     : GPL-3.0
+
