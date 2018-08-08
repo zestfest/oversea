@@ -1,0 +1,6 @@
+
+172.26.1.254 admin.ceph admin salt
+172.26.1.21  data1.ceph data1
+172.26.1.22  data2.ceph data2
+172.26.1.23  data3.ceph data3
+172.26.1.24  data4.ceph data4

@@ -1,5 +1,8 @@
 setup.py
-deepsea.spec
+oversea.spec
+**/.terraform
+**/terraform.tfvars
+oversea*.deb
 
 *.sw[pon]
 *~
