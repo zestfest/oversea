@@ -1,6 +1,6 @@
 # Override this to install docs somewhere else
 DOCDIR = /usr/share/doc/packages
-VERSION ?= $(shell (git describe 2>/dev/null || echo '0.0.0') | sed -e 's/^v//' -e 's/-/+/' -e 's/-/./')
+VERSION ?= $(shell (git describe 2>/dev/null || echo '0.0.0') | sed -e 's/^v//' -e 's/-/+/' -e 's/-/./' -e 's!unstable.*!unstable!')
 
 PYTHON_DEPS=python3-setuptools python3-click python3-tox
 PYTHON=python3
@@ -854,7 +854,7 @@ install: pyc install-deps copy-files
 all: test lint rpm
 
 rpm: tarball
-	sed '/^Version:/s/[^ ]*$$/'$(VERSION)'/' oversea.spec.in > oversea.spec
+	sed -e '/^Version:/s/[^ ]*$$/'$(VERSION)'/' oversea.spec.in > oversea.spec
 	rpmbuild -bb oversea.spec
 
 deb: 
@@ -862,6 +862,7 @@ deb:
 	mkdir $(TEMPDIR)/oversea-$(VERSION)
 	make copy-files DESTDIR=$(TEMPDIR)/oversea-$(VERSION)
 	cp -rp debian $(TEMPDIR)/oversea-$(VERSION)
+	(cd $(TEMPDIR)/oversea-$(VERSION); sed -i -e 's!0.*-1!'$(VERSION)'!' -e 's!unstable!0unstable0!' debian/changelog)
 	(cd $(TEMPDIR)/oversea-$(VERSION); dpkg-buildpackage -b -rfakeroot -us -uc)
 	mv $(TEMPDIR)/oversea*.deb .
 	rm -r $(TEMPDIR)
