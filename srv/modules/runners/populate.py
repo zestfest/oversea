@@ -492,7 +492,7 @@ class CephRoles(object):
         self.writer = writer
 
         self.root_dir = settings.root_dir
-        self.search = __utils__['deepsea_minions.show']()
+        self.search = __utils__['oversea_minions.show']()
 
         self.networks = self._networks(self.servers)
         self.public_networks, self.cluster_networks = self.public_cluster(self.networks.copy())
@@ -775,7 +775,7 @@ class CephCluster(object):
             self.names = ['ceph']
         self.writer = writer
 
-        self.search = __utils__['deepsea_minions.show']()
+        self.search = __utils__['oversea_minions.show']()
 
         local = salt.client.LocalClient()
         self.minions = local.cmd(self.search, 'grains.get', ['id'], tgt_type="compound")
@@ -956,7 +956,7 @@ def _get_existing_cluster_networks(addrs, public_networks=[]):
     returns a list of addresses consisting of network prefix followed by the
     cidr prefix (e.g. [ "10.0.0.0/24" ]).  It may return an empty list.
     """
-    self.search = __utils__['deepsea_minions.show']()
+    self.search = __utils__['oversea_minions.show']()
 
     local = salt.client.LocalClient()
     # Stores the derived network addresses (in CIDR notation) of all addresses contained in addrs.
@@ -1058,16 +1058,16 @@ def engulf_existing_cluster(**kwargs):
 
     This assumes your cluster is named "ceph".  If it's not, things will break.
     """
-    search = __utils__['deepsea_minions.show']()
+    search = __utils__['oversea_minions.show']()
     local = salt.client.LocalClient()
     settings = Settings()
     salt_writer = SaltWriter(**kwargs)
 
-    # Make sure deepsea_minions contains valid minions before proceeding with engulf.
+    # Make sure oversea_minions contains valid minions before proceeding with engulf.
     from . import validate
     validator = validate.Validate("ceph", search_pillar=True,
                                   printer=validate.get_printer())
-    validator.deepsea_minions()
+    validator.oversea_minions()
     if validator.errors:
         validator.report()
         return False
@@ -1152,7 +1152,7 @@ def engulf_existing_cluster(**kwargs):
 
         if "ceph-osd" in info["running_services"]:
             # Needs a storage profile assigned (which may be different
-            # than the proposals deepsea has come up with, depending on
+            # than the proposals oversea has come up with, depending on
             # how things were deployed)
             ceph_disks = local.cmd(minion, "cephinspector.get_ceph_disks_yml",
                                    [], tgt_type="compound")

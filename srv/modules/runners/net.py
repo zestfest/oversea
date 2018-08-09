@@ -150,7 +150,7 @@ def iperf(cluster=None, exclude=None, output=None, **kwargs):
             return result
     else:
         # pylint: disable=redefined-variable-type
-        search = __utils__['deepsea_minions.show']()
+        search = __utils__['oversea_minions.show']()
         if exclude_string:
             search += " and not ( " + exclude_string + " )"
             log.debug("ping: search {} ".format(search))
@@ -342,7 +342,7 @@ def ping(cluster=None, exclude=None, ping_type=None, **kwargs):
                                           networks[host]['public_network']))
     else:
         # pylint: disable=redefined-variable-type
-        search = __utils__['deepsea_minions.show']()
+        search = __utils__['oversea_minions.show']()
 
         if exclude_string:
             search += " and not ( " + exclude_string + " )"

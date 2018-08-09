@@ -1,0 +1,4 @@
+
+include:
+  - .core
+  - ...restart.mds

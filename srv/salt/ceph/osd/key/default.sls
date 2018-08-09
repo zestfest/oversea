@@ -3,8 +3,8 @@
   file.managed:
     - source: salt://ceph/osd/files/keyring.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
     - makedirs: True
     - context:
@@ -16,8 +16,8 @@
   file.managed:
     - source: salt://ceph/osd/files/storage.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
     - makedirs: True
     - context:

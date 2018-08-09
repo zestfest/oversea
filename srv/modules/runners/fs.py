@@ -324,7 +324,7 @@ def _inspect_ceph_statedir(path):
     Returns a dictionary of Path objects keyed on minion id.
 
     """
-    search = __utils__['deepsea_minions.show']
+    search = __utils__['oversea_minions.show']
     local = salt.client.LocalClient()
 
     # A container of Path's keyed on minion id.

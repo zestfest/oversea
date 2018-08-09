@@ -25,8 +25,8 @@ demo image:
     - source:
       - salt://ceph/igw/files/lrbd.conf.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
 
 # this will guarantee that lrbd.conf will be seen by minions
@@ -40,5 +40,5 @@ clear master file cache:
 
 fix salt job cache permissions:
   cmd.run:
-  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['deepsea.user']() }}:{{ salt['deepsea.group']() }} {} ';'"
+  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['oversea.user']() }}:{{ salt['oversea.group']() }} {} ';'"
 

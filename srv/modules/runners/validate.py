@@ -146,8 +146,8 @@ class Preparation(object):
     """
 
     def __init__(self):
-        self.search = __utils__['deepsea_minions.show']()
-        self.matches = __utils__['deepsea_minions.matches']()
+        self.search = __utils__['oversea_minions.show']()
+        self.matches = __utils__['oversea_minions.matches']()
         self.local = salt.client.LocalClient()
 
 
@@ -751,7 +751,7 @@ class Validate(Preparation):
         Check for installed Ceph packages.  The query is faster and a fresh
         install only happens once.
         """
-        search = __utils__['deepsea_minions.show']()
+        search = __utils__['oversea_minions.show']()
         results = self._silent_search(search, 'pkg.info_installed')
 
         for minion in results:
@@ -937,21 +937,21 @@ class Validate(Preparation):
             files = glob.glob(line)
         return files
 
-    def deepsea_minions(self):
+    def oversea_minions(self):
         """
-        Verify deepsea_minions is set
+        Verify oversea_minions is set
         """
         if self.search:
             if self.matches:
-                self.passed['deepsea_minions'] = "valid"
+                self.passed['oversea_minions'] = "valid"
             else:
                 # pylint: disable=line-too-long
-                msg = ("No minions matched for {} - See `man deepsea-minions`".format(self.search))
-                self.errors['deepsea_minions'] = [msg]
+                msg = ("No minions matched for {} - See `man oversea-minions`".format(self.search))
+                self.errors['oversea_minions'] = [msg]
         else:
-            msg = ("deepsea_minions not defined - " +
-                   "See `/srv/pillar/ceph/deepsea_minions.sls` for details")
-            self.errors['deepsea_minions'] = [msg]
+            msg = ("oversea_minions not defined - " +
+                   "See `/srv/pillar/ceph/oversea_minions.sls` for details")
+            self.errors['oversea_minions'] = [msg]
 
     def report(self):
         """
@@ -1032,7 +1032,7 @@ def discovery(cluster=None, printer=None, **kwargs):
     printer = get_printer(**kwargs)
     valid = Validate(cluster, search_pillar=True, printer=printer,
                      search=search)
-    valid.deepsea_minions()
+    valid.oversea_minions()
     valid.lint_yaml_files()
     if not valid.in_dev_env:
         valid.profiles_populated()
@@ -1120,7 +1120,29 @@ def prep(**kwargs):
     Enough users seem to skip around.  Verify that the basics are still
     correct for Stage 1.
     """
-    setup(**kwargs)
+    printer = get_printer(**kwargs)
+    if ('bypass' in kwargs and kwargs['bypass'] and
+        __salt__['cephprocesses.mon']()):
+        # Disable all Salt lookups
+        valid = Validate("setup", search_pillar=False, search_grains=False,
+                         skip_init=True, printer=printer)
+        valid.skip('oversea_minions')
+        valid.skip('master_minion')
+        valid.skip('ceph_version')
+        valid.skip('salt_version')
+        valid.report()
+        return True
+    valid = Validate("setup", search_pillar=True, printer=printer)
+    valid.oversea_minions()
+    valid.master_minion()
+    valid.ceph_version()
+    valid.salt_version()
+    valid.report()
+
+    if valid.errors:
+        return False
+
+    return True
 
 
 def setup(**kwargs):
@@ -1135,16 +1157,14 @@ def setup(**kwargs):
         # Disable all Salt lookups
         valid = Validate("setup", search_pillar=False, search_grains=False,
                          skip_init=True, printer=printer)
-        valid.skip('deepsea_minions')
+        valid.skip('oversea_minions')
         valid.skip('master_minion')
-        valid.skip('ceph_version')
         valid.skip('salt_version')
         valid.report()
         return True
     valid = Validate("setup", search_pillar=True, printer=printer)
-    valid.deepsea_minions()
+    valid.oversea_minions()
     valid.master_minion()
-    valid.ceph_version()
     valid.salt_version()
     valid.report()
 

@@ -1,4 +1,3 @@
 
 include:
   - .core
-  - ...restart.mds

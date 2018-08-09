@@ -360,9 +360,14 @@ copy-files:
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/files
 	install -m 644 srv/salt/ceph/monitoring/prometheus/files/*.j2 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/files
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters
-	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/*.sls $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/files
 	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/files/* $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/files
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/ceph_exporter
+	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/ceph_exporter/* $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/ceph_exporter
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/node_exporter
+	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/node_exporter/* $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/node_exporter
+	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/rbd_exporter
+	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/rbd_exporter/* $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/rbd_exporter
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/ceph_rgw_exporter
 	install -m 644 srv/salt/ceph/monitoring/prometheus/exporters/ceph_rgw_exporter/*.sls $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/ceph_rgw_exporter
 	install -d -m 755 $(DESTDIR)/srv/salt/ceph/monitoring/prometheus/exporters/ceph_rgw_exporter/CentOS
@@ -861,6 +866,7 @@ deb:
 	$(eval TEMPDIR := $(shell mktemp -d))
 	mkdir $(TEMPDIR)/oversea-$(VERSION)
 	make copy-files DESTDIR=$(TEMPDIR)/oversea-$(VERSION)
+	rm $(TEMPDIR)/oversea-$(VERSION)/etc/salt/master.d/sharedsecret.conf
 	cp -rp debian $(TEMPDIR)/oversea-$(VERSION)
 	(cd $(TEMPDIR)/oversea-$(VERSION); sed -i -e 's!0.*-1!'$(VERSION)'!' -e 's!unstable!0unstable0!' debian/changelog)
 	(cd $(TEMPDIR)/oversea-$(VERSION); dpkg-buildpackage -b -rfakeroot -us -uc)

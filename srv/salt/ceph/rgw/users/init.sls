@@ -1,4 +1,6 @@
 
+{% set custom = salt['pillar.get']('rgw_users', 'not a file') %}
+{% from 'ceph/macros/os_switch.sls' import os_switch with context %}
 
 include:
-  - .{{ salt['pillar.get']('rgw_users', 'default') }}
+  - .{{ os_switch(custom) }}

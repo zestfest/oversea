@@ -17,7 +17,7 @@ push proposals:
 
 refresh_pillar1:
   salt.state:
-    - tgt: '{{ salt['pillar.get']('deepsea_minions') }}'
+    - tgt: '{{ salt['pillar.get']('oversea_minions') }}'
     - tgt_type: compound
     - sls: ceph.refresh
 
@@ -43,7 +43,7 @@ setup monitoring:
 
 install and setup node exporters:
   salt.state:
-    - tgt: '{{ salt['pillar.get']('deepsea_minions') }}'
+    - tgt: '{{ salt['pillar.get']('oversea_minions') }}'
     - tgt_type: compound
     - sls: ceph.monitoring.prometheus.exporters.node_exporter
 

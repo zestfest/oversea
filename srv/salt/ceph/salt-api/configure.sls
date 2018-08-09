@@ -4,8 +4,8 @@
     - source:
       - salt://ceph/salt-api/files/sharedsecret.conf.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
     - replace: False
     - context:

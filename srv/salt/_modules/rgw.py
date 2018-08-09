@@ -16,13 +16,6 @@ try:
     import salt.config
 except ImportError:
     logging.error("Could not import salt.config")
-# pylint: disable=import-error,3rd-party-module-not-gated
-import boto
-# pylint: disable=import-error,3rd-party-module-not-gated
-import boto.s3.connection
-# pylint: disable=import-error,3rd-party-module-not-gated
-import boto.exception
-
 
 log = logging.getLogger(__name__)
 
@@ -266,47 +259,57 @@ def endpoints(cluster='ceph'):
     return result
 
 
-def s3connect(user):
+def _get_args(**kwargs):
     """
-    Return an S3 connection
+    Return user and bucket
     """
+    if 'user' not in kwargs:
+        return None, None
+    user = kwargs['user']
     if access_key(user) is None or secret_key(user) is None:
-        return None
-    endpoint = endpoints()[0]
+        return None, None
 
-    s3conn = boto.connect_s3(
-        aws_access_key_id=access_key(user),
-        aws_secret_access_key=secret_key(user),
-        host=endpoint['host'],
-        is_secure=bool(endpoint['ssl']),
-        port=int(endpoint['port']),
-        calling_format=boto.s3.connection.OrdinaryCallingFormat(),
-    )
-    return s3conn
+    if 'bucket_name' not in kwargs:
+        return None, None
+    bucket = kwargs['bucket_name']
+    return user, bucket
 
 
 def create_bucket(**kwargs):
     """
     Create a bucket for a user
     """
-    s3conn = s3connect(kwargs['user'])
-    if s3conn is None:
-        return False
-    try:
-        s3conn.create_bucket(kwargs['bucket_name'])
-    except boto.exception.S3CreateError:
-        return False
-    return True
+    user, bucket = _get_args(**kwargs)
+
+    first_endpoint = endpoints()[0]
+    if first_endpoint['ssl']:
+        option = ""
+    else:
+        option = "-u"
+
+    cmd = ("S3_ACCESS_KEY_ID={} S3_SECRET_ACCESS_KEY={} S3_HOSTNAME={} "
+           "s3 {} create {}").format(access_key(user), secret_key(user),
+                                     first_endpoint['host'], option, bucket)
+
+    proc = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    proc.wait()
+    return proc.returncode
 
 
 def lookup_bucket(user, bucket):
     """
     Query a bucket for a user
     """
-    s3conn = s3connect(user)
-    if s3conn is None:
-        return False
-    if s3conn.lookup(bucket, validate=True) is None:
-        return False
+    first_endpoint = endpoints()[0]
+    if first_endpoint['ssl']:
+        option = ""
+    else:
+        option = "-u"
 
-    return True
+    cmd = ("S3_ACCESS_KEY_ID={} S3_SECRET_ACCESS_KEY={} S3_HOSTNAME={} "
+           "s3 {} list {}").format(access_key(user), secret_key(user),
+                                   first_endpoint['host'], option, bucket)
+
+    proc = Popen(cmd, stdout=PIPE, stderr=PIPE, shell=True)
+    proc.wait()
+    return proc.returncode == 0

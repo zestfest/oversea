@@ -23,8 +23,8 @@ check {{ role }}:
       - salt://ceph/ganesha/files/{{ role }}.conf.j2
     - template: jinja
     - makedirs: True
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
     - context:
       role: {{ salt['rgw.configuration'](role) }}
@@ -39,5 +39,5 @@ check {{ role }}:
 
 fix salt job cache permissions:
   cmd.run:
-  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['deepsea.user']() }}:{{ salt['deepsea.group']() }} {} ';'"
+  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['oversea.user']() }}:{{ salt['oversea.group']() }} {} ';'"
 

@@ -97,9 +97,9 @@ class Target(object):
     @staticmethod
     def show():
         """
-        Wraps deepsea_minions.show
+        Wraps oversea_minions.show
         """
-        return __utils__['deepsea_minions.show']()
+        return __utils__['oversea_minions.show']()
 
 
 class StdArgs(object):
@@ -259,13 +259,17 @@ def _write_proposal(prop, profile_dir):
     """
     node, proposal = list(prop.items())[0]
 
+    # Keep yaml human readable/editable
+    friendly_dumper = yaml.SafeDumper
+    friendly_dumper.ignore_aliases = lambda self, data: True
+
     # write out roles
     role_file = '{}/cluster/{}.sls'.format(profile_dir, node)
 
     with open(role_file, 'w') as outfile:
         content = {'roles': ['storage']}
         # implement merge of existing data
-        yaml.dump(content, outfile, default_flow_style=False)
+        yaml.dump(content, outfile, Dumper=friendly_dumper, default_flow_style=False)
 
     # TODO do not hardcode cluster name ceph here
     profile_file = '{}/stack/default/ceph/minions/{}.yml'.format(profile_dir,
@@ -278,7 +282,7 @@ def _write_proposal(prop, profile_dir):
     with open(profile_file, 'w') as outfile:
         content = {'ceph': {'storage': {'osds': proposal}}}
         # implement merge of existing data
-        yaml.dump(content, outfile, default_flow_style=False)
+        yaml.dump(content, outfile, Dumper=friendly_dumper, default_flow_style=False)
 
 
 def _record_filter(args, base_dir):
@@ -286,6 +290,10 @@ def _record_filter(args, base_dir):
     Save the filter provided
     """
     filter_file = '{}/.filter'.format(base_dir)
+
+    # Keep yaml human readable/editable
+    friendly_dumper = yaml.SafeDumper
+    friendly_dumper.ignore_aliases = lambda self, data: True
 
     if not isfile(filter_file):
         # do a touch filter_file
@@ -305,7 +313,7 @@ def _record_filter(args, base_dir):
     current_filter[args['target']] = rec_args
 
     with open(filter_file, 'w') as filehandle:
-        yaml.dump(current_filter, filehandle, default_flow_style=False)
+        yaml.dump(current_filter, filehandle, Dumper=friendly_dumper, default_flow_style=False)
 
 
 def populate(**kwargs):
