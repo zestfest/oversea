@@ -1,0 +1,5 @@
+#!/bin/bash
+if [ ! -f "/etc/salt/master.d/sharedsecret.conf" ]
+then
+  echo "sharedsecret: `cat /proc/sys/kernel/random/uuid`" > /etc/salt/master.d/sharedsecret.conf
+fi
