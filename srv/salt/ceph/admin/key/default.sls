@@ -7,8 +7,8 @@
     - source:
       - salt://ceph/admin/files/keyring.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 600
     - makedirs: True
     - context:

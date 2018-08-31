@@ -54,7 +54,7 @@ class Checks(object):
         for any differences.
         """
         contents = self.local.cmd(self.search, 'cmd.shell',
-                                  ['/usr/sbin/iptables -S'],
+                                  ['iptables -S'],
                                   tgt_type="compound")
         for minion in contents:
             # Accept custom named chains

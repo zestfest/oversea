@@ -32,11 +32,17 @@ class Proposal(object):
         self.data_disks = []
         self._parse_args(kwargs)
         # we differentiate 3 kinds of drives for now
-        self.nvme = [disk for disk in disks if disk['Driver'] ==
-                     self.NVME_DRIVER and disk['rotational'] == '0']
-        self.ssd = [disk for disk in disks if disk['Driver'] !=
-                    self.NVME_DRIVER and disk['rotational'] == '0']
-        self.spinner = [disk for disk in disks if disk['rotational'] == '1']
+        self.nvme = []
+        self.ssd = []
+        self.spinner = []
+        for disk in disks:
+            if disk['rotational'] == '0':
+                if 'Driver' in disk and disk['Driver'] == self.NVME_DRIVER:
+                    self.nvme.append(disk)
+                else:
+                    self.ssd.append(disk)
+            else:
+                self.spinner.append(disk)
         log.warning(self.nvme)
         log.warning(self.ssd)
         log.warning(self.spinner)

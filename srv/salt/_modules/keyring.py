@@ -74,14 +74,14 @@ def file_(component, name=None):
     elif component == "ganesha":
         return "/srv/salt/ceph/ganesha/cache/" + name + ".keyring"
 
-    elif component == "deepsea_cephfs_bench":
-        return "/srv/salt/ceph/cephfs/benchmarks/files/cache/deepsea_cephfs_bench.keyring"
+    elif component == "oversea_cephfs_bench":
+        return "/srv/salt/ceph/cephfs/benchmarks/files/cache/oversea_cephfs_bench.keyring"
 
-    elif component == "deepsea_cephfs_bench_secret":
-        return "/srv/salt/ceph/cephfs/benchmarks/files/cache/deepsea_cephfs_bench.secret"
+    elif component == "oversea_cephfs_bench_secret":
+        return "/srv/salt/ceph/cephfs/benchmarks/files/cache/oversea_cephfs_bench.secret"
 
-    elif component == "deepsea_rbd_bench":
-        return "/srv/salt/ceph/rbd/benchmarks/files/cache/deepsea_rbd_bench.keyring"
+    elif component == "oversea_rbd_bench":
+        return "/srv/salt/ceph/rbd/benchmarks/files/cache/oversea_rbd_bench.keyring"
 
     return None
 

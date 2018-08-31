@@ -91,7 +91,7 @@ def configure_salt_api(hostname, port, username, sharedsecret):
     config['SALT_API_SHARED_SECRET'] = sharedsecret
 
     # Write backup file
-    copyfile(config_file, "{}.deepsea.bak".format(config_file))
+    copyfile(config_file, "{}.oversea.bak".format(config_file))
     _write_config_file(config_file, config)
 
 
@@ -106,5 +106,5 @@ def configure_grafana(hostname):
     config['GRAFANA_API_HOST'] = hostname
 
     # Write backup file
-    copyfile(config_file, "{}.deepsea.bak".format(config_file))
+    copyfile(config_file, "{}.oversea.bak".format(config_file))
     _write_config_file(config_file, config)

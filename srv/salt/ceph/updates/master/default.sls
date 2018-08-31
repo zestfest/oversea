@@ -1,7 +1,7 @@
 update deepsea:
   pkg.latest:
     - pkgs:
-      - deepsea
+      - oversea
       - salt-master
       - salt-minion
     - dist-upgrade: True

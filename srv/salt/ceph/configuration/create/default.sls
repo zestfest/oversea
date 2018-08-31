@@ -6,13 +6,13 @@ removing minion cache:
   file.managed:
     - source: salt://ceph/configuration/files/ceph.conf.j2
     - template: jinja
-    - user: {{ salt['deepsea.user']() }}
-    - group: {{ salt['deepsea.group']() }}
+    - user: {{ salt['oversea.user']() }}
+    - group: {{ salt['oversea.group']() }}
     - mode: 644
     - makedirs: True
     - fire_event: True
 
 fix salt job cache permissions:
   cmd.run:
-  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['deepsea.user']() }}:{{ salt['deepsea.group']() }} {} ';'"
+  - name: "find /var/cache/salt/master/jobs -user root -exec chown {{ salt['oversea.user']() }}:{{ salt['oversea.group']() }} {} ';'"
 

@@ -2,6 +2,7 @@ setup.py
 oversea.spec
 **/.terraform
 **/terraform.tfvars
+**/terraform.tfstate
 oversea*.deb
 
 *.sw[pon]

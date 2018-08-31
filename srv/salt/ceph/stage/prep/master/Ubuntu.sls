@@ -1,4 +1,3 @@
-
 {% set master = salt['master.minion']() %}
 
 {% if salt['saltutil.runner']('validate.setup') == False %}
@@ -33,6 +32,11 @@ metapackage master:
     - tgt: {{ master }}
     - sls: ceph.metapackage
 
+prepare master:
+  salt.state:
+    - tgt: {{ master }}
+    - sls: ceph.updates
+
 {% set kernel= grains['kernelrelease'] | replace('-default', '')  %}
 
 unlock:
@@ -40,7 +44,6 @@ unlock:
     - name: filequeue.remove
     - queue: 'master'
     - item: 'lock'
-    - unless: "rpm -q --last kernel-default | head -1 | grep -q {{ kernel }}"
 
 restart master:
   salt.state:
@@ -57,7 +60,4 @@ ready:
   salt.runner:
     - name: minions.ready
     - timeout: {{ salt['pillar.get']('ready_timeout', 300) }}
-
-
-
 

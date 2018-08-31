@@ -21,8 +21,8 @@ def test_get_printer():
 class TestClusterAssignment():
     @patch('salt.client.LocalClient')
     def test_single_cluster(self, mock_localclient):
-        validate.__utils__ = {'deepsea_minions.show': lambda: '*'}
-        validate.__utils__.update({'deepsea_minions.matches': lambda: ['node1', 'node2']})
+        validate.__utils__ = {'oversea_minions.show': lambda: '*'}
+        validate.__utils__.update({'oversea_minions.matches': lambda: ['node1', 'node2']})
         cluster_dict = {"minionA":"ceph", "minionB": "ceph", "minionC": "ceph"}
 
         local = mock_localclient.return_value
@@ -77,8 +77,8 @@ class TestUtilMethods():
 class TestValidation():
     @patch('salt.client.LocalClient', autospec=True)
     def test_dev_env(self, mock_localclient, monkeypatch):
-        validate.__utils__ = {'deepsea_minions.show': lambda: '*'}
-        validate.__utils__.update({'deepsea_minions.matches': lambda: ['node1', 'node2']})
+        validate.__utils__ = {'oversea_minions.show': lambda: '*'}
+        validate.__utils__.update({'oversea_minions.matches': lambda: ['node1', 'node2']})
         monkeypatch.setenv('DEV_ENV', 'true')
         validator = validate.Validate("setup")
 
@@ -341,7 +341,7 @@ class TestValidation():
 
     @patch('validate.DeepseaMinions')
     @patch('salt.client.LocalClient')
-    def test_salt_version(self, mock_localclient, mock_deepsea):
+    def test_salt_version(self, mock_localclient, mock_oversea):
         fake_data = { 'admin.ceph': '2018.1.99',
                       'data.ceph': '2018.1.99'}
 

@@ -136,7 +136,7 @@ class Zypper(PackageManager):
     """
     Although salt already has a zypper module
     the upgrading workflow is much cleaner if
-    deepsea handles reboots based on the returncode
+    oversea handles reboots based on the returncode
     from zypper. In order to react on those
     Zypper has to be invoked in a separate module.
 
