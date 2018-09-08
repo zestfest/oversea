@@ -6,8 +6,8 @@
 
 {# check shrinking of mds cluster #}
 
-{% set fs_name = salt['saltutil.runner']('cmd.run', cmd='ceph fs dump --format=json-pretty 2>/dev/null | jq --raw-output .filesystems[0].mdsmap.fs_name') %}
-{% set ranks_in = salt['saltutil.runner']('cmd.run', cmd='ceph fs dump --format=json-pretty 2>/dev/null | jq ".filesystems[0].mdsmap.in | length"') %}
+{% set fs_name = salt['saltutil.runner']('cephfs.fs_name') %}
+{% set ranks_in = salt['saltutil.runner']('cephfs.ranks_in') %}
 {% set master = salt['master.minion']() %}
 
 shrink mds cluster:

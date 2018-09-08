@@ -227,8 +227,9 @@ def need_restart_lsof(role=None):
     Use the process map to determine if a service restart is required.
     """
     assert role
-    lsof_proc_map = _process_map()
-    proc_map = zypper_ps(role, lsof_proc_map)
+    proc_map = _process_map()
+    if __grains__['os'] == "SUSE":
+        proc_map = zypper_ps(role, proc_map)
     for proc in proc_map:
         if proc['name'] in processes[role]:
             if role == 'openattic' and proc['user'] != 'openattic':
