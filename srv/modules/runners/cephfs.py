@@ -3,27 +3,21 @@
 # pylint: disable=visually-indented-line-with-same-indent-as-next-logical-line
 # pylint: disable=fixme,no-self-use
 """
+Functions that parse `ceph fs dump`
 """
 
 from __future__ import absolute_import
 from __future__ import print_function
 import logging
-import ipaddress
 import json
-import os
-from os.path import dirname
-import re
-import sys
-import glob
 from subprocess import Popen, PIPE
-import pprint
-
 
 log = logging.getLogger(__name__)
 
+
 def popen(cmd):
     """
-    Return stdout, stderr of cmd
+    Return rc, stdout, stderr of cmd
     """
     stdout = []
     stderr = []
@@ -37,18 +31,20 @@ def popen(cmd):
     proc.wait()
     return (proc.returncode, stdout, stderr)
 
+
 def fs_name():
     """
+    Return the fs_name
     """
-    rc, out, err = popen("ceph fs dump --format=json".split())
-    #pprint.pprint(out[1])
+    _, out, _ = popen("ceph fs dump --format=json".split())
     data = json.loads(out[1])
     return data['filesystems'][0]['mdsmap']['fs_name']
 
+
 def ranks_in():
     """
+    Return the number of mds entries
     """
-    rc, out, err = popen("ceph fs dump --format=json".split())
-    #pprint.pprint(out[1])
+    _, out, _ = popen("ceph fs dump --format=json".split())
     data = json.loads(out[1])
     return len(data['filesystems'][0]['mdsmap']['in'])
