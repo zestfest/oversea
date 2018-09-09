@@ -6,4 +6,3 @@ include:
   - .restart.mgr
   - .restart.mon
   - .restart.rgw
-  - .apparmor
