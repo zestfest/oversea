@@ -7,7 +7,7 @@ do
     salt-key -A -y
     sleep 5
     count=$((count + 1))
-    if [ $count -gt 10 ]
+    if [ $count -gt 30 ]
     then
         echo "Giving up" >&2
         exit 1
