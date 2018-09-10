@@ -1,0 +1,4 @@
+# /srv/pillar/ceph/stack/ceph/cluster.yml
+# Overwrites configuration in /srv/pillar/ceph/stack/default/ceph/cluster.yml
+public_network: 172.26.0.0/16
+cluster_network: 172.26.0.0/16

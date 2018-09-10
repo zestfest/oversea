@@ -1,6 +1,6 @@
 resource "linode_linode" "admin" {
         image = "Ubuntu 18.04 LTS"
-        kernel = "Latest 64 bit"
+        kernel = "4.16.11-x86_64-linode108"
         name = "admin"
         group = "oversea1"
         region = "Atlanta, GA, USA"
@@ -24,6 +24,19 @@ resource "linode_linode" "admin" {
           source      = "files/install_salt_master.sh"
           destination = "/tmp/install_salt_master.sh"
         }
+         # OverSea
+         provisioner "file" {
+           source      = "files/oversea/oversea_minions.sls"
+           destination = "/tmp/oversea_minions.sls"
+         }
+         provisioner "file" {
+           source      = "files/oversea/cluster.yml"
+           destination = "/tmp/cluster.yml"
+         }
+         provisioner "file" {
+           source      = "files/oversea/policy.cfg"
+           destination = "/tmp/policy.cfg"
+         }
         provisioner "remote-exec" {
         inline = [
           "chmod +x /tmp/postinstall.sh",
