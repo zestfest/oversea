@@ -36,6 +36,7 @@ Requires:       salt-master
 Requires:       salt-minion
 Requires:       salt-api
 Requires:       iputils
+Requires:       jq
 Requires:       python3-netaddr
 Requires:       python3-rados
 Requires:       python3-configobj
@@ -81,6 +82,7 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %dir %attr(0755, salt, salt) /srv/pillar/ceph/benchmarks/fio
 %dir %attr(0755, salt, salt) /srv/pillar/ceph/benchmarks/templates
 %dir /srv/salt/_modules
+%dir /srv/salt/_states
 %dir /srv/modules
 %dir /srv/modules/modules
 %dir /srv/modules/runners
@@ -202,9 +204,6 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %dir /srv/salt/ceph/openstack/glance/key
 %dir /srv/salt/ceph/openstack/glance/pool
 %dir /srv/salt/ceph/openstack/nova
-%dir /srv/salt/ceph/openstack/nova/auth
-%dir /srv/salt/ceph/openstack/nova/files
-%dir /srv/salt/ceph/openstack/nova/key
 %dir /srv/salt/ceph/openstack/nova/pool
 %dir %attr(0700, salt, salt) /srv/salt/ceph/openattic/cache
 %dir /srv/salt/ceph/openattic/files
@@ -241,13 +240,13 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %dir /srv/salt/ceph/redeploy/osds
 %dir /srv/salt/ceph/redeploy/nodes
 %dir /srv/salt/ceph/remove
+%dir /srv/salt/ceph/remove/destroyed
 %dir /srv/salt/ceph/remove/ganesha
 %dir /srv/salt/ceph/remove/igw
 %dir /srv/salt/ceph/remove/igw/auth
 %dir /srv/salt/ceph/remove/mon
 %dir /srv/salt/ceph/remove/mds
 %dir /srv/salt/ceph/remove/mgr
-%dir /srv/salt/ceph/remove/migrated
 %dir /srv/salt/ceph/remove/rgw
 %dir /srv/salt/ceph/remove/storage
 %dir /srv/salt/ceph/remove/storage/drain
@@ -398,6 +397,7 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %config(noreplace) %attr(-, salt, salt) /etc/salt/master.d/*.conf
 /srv/modules/modules/*.py*
 /srv/modules/runners/*.py*
+%exclude /srv/modules/runners/smoketests.py
 /srv/modules/utils/*.py*
 %config %attr(-, salt, salt) /srv/pillar/top.sls
 %config %attr(-, salt, salt) /srv/pillar/ceph/init.sls
@@ -409,6 +409,7 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %config(noreplace) %attr(-, salt, salt) /srv/pillar/ceph/oversea_minions.sls
 %config %attr(-, salt, salt) /srv/pillar/ceph/stack/stack.cfg
 /srv/salt/_modules/*.py*
+/srv/salt/_states/*.py*
 %config /srv/salt/ceph/admin/*.sls
 %config /srv/salt/ceph/admin/files/*.j2
 %config /srv/salt/ceph/admin/key/*.sls
@@ -524,9 +525,6 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %config /srv/salt/ceph/openstack/glance/key/*.sls
 %config /srv/salt/ceph/openstack/glance/pool/*.sls
 %config /srv/salt/ceph/openstack/nova/*.sls
-%config /srv/salt/ceph/openstack/nova/auth/*.sls
-%config /srv/salt/ceph/openstack/nova/files/*.j2
-%config /srv/salt/ceph/openstack/nova/key/*.sls
 %config /srv/salt/ceph/openstack/nova/pool/*.sls
 %config /srv/salt/ceph/osd/*.sls
 %config /srv/salt/ceph/osd/files/*.j2
@@ -555,7 +553,7 @@ systemctl try-restart salt-api > /dev/null 2>&1 || :
 %config /srv/salt/ceph/remove/igw/auth/*.sls
 %config /srv/salt/ceph/remove/mon/*.sls
 %config /srv/salt/ceph/remove/mds/*.sls
-%config /srv/salt/ceph/remove/migrated/*.sls
+%config /srv/salt/ceph/remove/destroyed/*.sls
 %config /srv/salt/ceph/remove/mgr/*.sls
 %config /srv/salt/ceph/remove/openattic/*.sls
 %config /srv/salt/ceph/remove/rgw/*.sls
@@ -737,6 +735,14 @@ the README for more information.
 %dir /srv/salt/ceph/smoketests/macros
 %dir /srv/salt/ceph/smoketests/macros/os_switch
 %dir /srv/salt/ceph/smoketests/quiescent
+%dir /srv/salt/ceph/smoketests/migrate
+%dir /srv/salt/ceph/smoketests/migrate/filestore
+%dir /srv/salt/ceph/smoketests/migrate/filestore2
+%dir /srv/salt/ceph/smoketests/migrate/bluestore
+%dir /srv/salt/ceph/smoketests/migrate/bluestore2
+%dir /srv/salt/ceph/smoketests/migrate/bluestore3
+%dir /srv/salt/ceph/smoketests/remove
+%dir /srv/salt/ceph/smoketests/replace
 %dir /srv/salt/ceph/smoketests/restart
 %dir /srv/salt/ceph/tests
 %dir /srv/salt/ceph/tests/keyrings
@@ -745,6 +751,9 @@ the README for more information.
 %dir /srv/salt/ceph/tests/quiescent/timeout
 %dir /srv/salt/ceph/tests/quiescent
 %dir /srv/salt/ceph/tests/quiescent/timeout
+%dir /srv/salt/ceph/tests/migrate
+%dir /srv/salt/ceph/tests/remove
+%dir /srv/salt/ceph/tests/replace
 %dir /srv/salt/ceph/tests/restart
 %dir /srv/salt/ceph/tests/restart/mon
 %dir /srv/salt/ceph/tests/restart/mon/change
@@ -764,14 +773,26 @@ the README for more information.
 %dir /srv/salt/ceph/tests/restart/rgw/nochange
 /srv/salt/ceph/smoketests/*.sls
 /srv/salt/ceph/smoketests/apparmor/*.sls
+/srv/modules/runners/smoketests.py
 /srv/salt/ceph/smoketests/keyrings/*.sls
 /srv/salt/ceph/smoketests/macros/os_switch/*.sls
 /srv/salt/ceph/smoketests/quiescent/*.sls
+/srv/salt/ceph/smoketests/migrate/*.sls
+/srv/salt/ceph/smoketests/migrate/filestore/*.sls
+/srv/salt/ceph/smoketests/migrate/filestore2/*.sls
+/srv/salt/ceph/smoketests/migrate/bluestore/*.sls
+/srv/salt/ceph/smoketests/migrate/bluestore2/*.sls
+/srv/salt/ceph/smoketests/migrate/bluestore3/*.sls
+/srv/salt/ceph/smoketests/remove/*.sls
+/srv/salt/ceph/smoketests/replace/*.sls
 /srv/salt/ceph/smoketests/restart/*.sls
 /srv/salt/ceph/tests/keyrings/*.sls
 /srv/salt/ceph/tests/os_switch/*.sls
 /srv/salt/ceph/tests/quiescent/*.sls
 /srv/salt/ceph/tests/quiescent/timeout/*.sls
+/srv/salt/ceph/tests/migrate/*.sls
+/srv/salt/ceph/tests/remove/*.sls
+/srv/salt/ceph/tests/replace/*.sls
 /srv/salt/ceph/tests/restart/*.sls
 /srv/salt/ceph/tests/restart/mon/*.sls
 /srv/salt/ceph/tests/restart/mon/change/*.sls
@@ -789,5 +810,4 @@ the README for more information.
 /srv/salt/ceph/tests/restart/rgw/change/*.sls
 /srv/salt/ceph/tests/restart/rgw/forced/*.sls
 /srv/salt/ceph/tests/restart/rgw/nochange/*.sls
-
 %changelog

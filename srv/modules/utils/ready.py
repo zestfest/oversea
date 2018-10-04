@@ -158,6 +158,7 @@ def check(cluster, fail_on_warning=True, search=None, **kwargs):
         return False
     return True
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

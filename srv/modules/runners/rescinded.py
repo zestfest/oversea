@@ -68,6 +68,7 @@ def osds(cluster='ceph'):
             log.debug(data[minion])
     return list(set(_ids))
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

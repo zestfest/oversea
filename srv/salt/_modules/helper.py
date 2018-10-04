@@ -20,7 +20,7 @@ def convert_out(out):
     requires to manipulate and compare it.
     """
     if isinstance(out, bytes):
-        return out.decode()
+        return out.decode('utf-8')
     elif isinstance(out, str):
         return out
     elif isinstance(out, int):

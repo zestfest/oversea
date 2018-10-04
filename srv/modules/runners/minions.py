@@ -107,6 +107,7 @@ def message(**kwargs):
     log.warning("{}".format(kwargs['content']))
     return ""
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

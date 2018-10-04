@@ -56,6 +56,7 @@ def check(cluster='ceph'):
         stamp_recent = stamp + 60 > time.time()
     return stamp_recent
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

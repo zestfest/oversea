@@ -89,6 +89,7 @@ def report(cluster_name='ceph', stdout=True, return_data=False):
     else:
         return ""
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

@@ -71,6 +71,7 @@ def unique(cluster='ceph', exclude=[]):
     sys.stdout = _stdout
     return _preserve_order_sorted(all_clients)
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

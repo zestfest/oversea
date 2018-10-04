@@ -166,6 +166,7 @@ def token(**kwargs):
                        tgt_type="compound")
     return _token
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }

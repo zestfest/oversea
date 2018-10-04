@@ -131,6 +131,7 @@ class StdArgs(object):
          'db-size': '500m',
          'wal-size': '500m'}
 
+
 BASE_DIR = '/srv/pillar/ceph/proposals'
 
 
@@ -347,6 +348,7 @@ def populate(**kwargs):
     _record_filter(args, profile_dir)
 
     return True
+
 
 __func_alias__ = {
                  'help_': 'help',

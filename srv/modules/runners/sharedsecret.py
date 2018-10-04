@@ -40,6 +40,7 @@ def show():
             return None
         return line[idx+2:]
 
+
 __func_alias__ = {
                  'help_': 'help',
                  }
